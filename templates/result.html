@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resume Screener - Result</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <h1>Resume Screener - Result</h1>
+
+    <h2>Result Analysis</h2>
+    <p>Resume Position: {{ resume_position }}</p>
+    <p>Match Percentage with JD: {{ match_percentage }}</p>
+
+    <div class="graph-container">{{ graph | safe }}</div>
+
+    <div class="chart-container">{{ chart | safe }}</div>
+  </body>
+</html>

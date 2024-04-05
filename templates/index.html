@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Resume Screener</title>
+  </head>
+  <body>
+    <h1>Resume Screener</h1>
+    <form action="/submit" method="post" enctype="multipart/form-data">
+      <label for="jd">Upload Job Description:</label>
+      <input type="file" id="jd" name="jd" accept=".docx" /><br /><br />
+
+      <label for="resume">Upload Resume:</label>
+      <input type="file" id="resume" name="resume" accept=".docx" /><br /><br />
+
+      <input type="submit" value="Submit" />
+    </form>
+
+    <div>{{ graph | safe }}</div>
+
+    <div>{{ chart | safe }}</div>
+  </body>
+</html>
