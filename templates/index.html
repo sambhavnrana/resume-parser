@@ -29,7 +29,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/static/style.css" />
-    <title>Resume Screener</title>
+    <title >Resume Screener</title>
   </head>
   <body>
     <nav class="navbar bg-body-tertiary">
@@ -41,20 +41,18 @@
    
 
       <div class="d-grid gap-2 col-2 mx-auto" style="padding-top: 0.5rem">
-        <button class="btn btn-outline-primary" role="button" href="http://localhost:8501/">
-          Parse
-        </button>
+        <a class="btn btn-outline-primary" role="button" href="http://localhost:8501/" id="entry-btn">
+          Proceed to Dashboard
+        </a>
       </div>
 
       <!-- <input type="submit" value="Submit" /> -->
     </form>
 
-    <div>{{ graph | safe }}</div>
 
-    <div>{{ chart | safe }}</div>
 
     <footer>
-      <div class="background">
+      <!-- <div class="background">
         <svg
           version="1.1"
           xmlns="http://www.w3.org/2000/svg"
@@ -115,21 +113,9 @@
             </use>
           </g>
         </svg>
-      </div>
+      </div> -->
       <section>
-        <!-- <ul class="socials">
-          <li><a class="fa-brands fa-x-twitter"></a></li>
-          <li><a class="fa-brands fa-facebook"></a></li>
-          <li><a class="fa-brands fa-linkedin"></a></li>
-        </ul>
-        <ul class="links">
-          <li><a>Home</a></li>
-          <li><a>About</a></li>
-          <li><a>Portfolio</a></li>
-          <li><a>Skillset</a></li>
-          <li><a>Hire</a></li>
-        </ul> -->
-        <p class="legal">© 2024 All rights reserved</p>
+       
       </section>
     </footer>
   </body>

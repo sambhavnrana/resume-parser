@@ -69,7 +69,7 @@ def submit():
         mode="gauge+number",
         value=match_percentage_docx,  # Use the match percentage out of 100
         domain={'x': [0, 1], 'y': [0, 1]},
-        title={'text': "Match with JD"}
+        title={'text': "Match with Job Description"}
     ))
     graph = fig.to_html(full_html=False)
 

@@ -102,3 +102,8 @@ section {
 form {
   text-align: center;
 }
+
+#entry-btn {
+  padding: 10px;
+  margin-top: 120%;
+}
