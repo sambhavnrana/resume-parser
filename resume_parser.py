@@ -44,7 +44,7 @@ remove_characters= str.maketrans("", "", "±§!@#$%^&*()-_=+[]}{;'\:,./<>?|")
 # job_description= docx2txt.process("temp_jd.docx")
 cv = CountVectorizer()
 
-st.title("Resume Screener")
+st.title("Upload Job Description")
 
 jd_docx=st.file_uploader("Upload your Job Description",type=["docx"])
 #converts pdf format to text
@@ -62,8 +62,7 @@ if st.button("Submit",key='1'):
     
 
 
-
-st.title("Upload resume here:")
+st.title("Upload Resume here!")
 uploaded_files = st.file_uploader("Choose a multiple files", type=["docx"], accept_multiple_files=True)
 if st.button("Submit",key='2'):
     if uploaded_files is not None:
