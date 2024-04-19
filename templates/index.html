@@ -38,42 +38,10 @@
       </div>
     </nav>
 
-    <form action="/submit" method="post" enctype="multipart/form-data">
-      <div
-        class="mb-3"
-        style="width: fit-content; padding-left: 37.5%; padding-top: 2rem"
-      >
-        <label for="jd" class="form-label">Upload Job Description:</label>
-        <input
-          class="form-control"
-          type="file"
-          id="jd"
-          accept=".docx"
-          name="jd"
-        />
-      </div>
-      <!-- <label for="jd">Upload Job Description:</label>
-      <input type="file" id="jd" name="jd" accept=".docx" /><br /><br /> -->
-
-      <!-- <label for="resume">Upload Resume:</label>
-      <input type="file" id="resume" name="resume" accept=".docx" /><br /><br /> -->
-
-      <div
-        class="mb-3"
-        style="width: fit-content; padding-left: 37.5%; padding-top: 2rem"
-      >
-        <label for="resume" class="form-label">Upload Resume:</label>
-        <input
-          class="form-control"
-          type="file"
-          id="resume"
-          accept=".docx"
-          name="resume"
-        />
-      </div>
+   
 
       <div class="d-grid gap-2 col-2 mx-auto" style="padding-top: 0.5rem">
-        <button class="btn btn-outline-primary" type="submit" value="submit">
+        <button class="btn btn-outline-primary" role="button" href="http://localhost:8501/">
           Parse
         </button>
       </div>
