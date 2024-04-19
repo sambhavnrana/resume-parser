@@ -11,15 +11,7 @@ import numpy as np
 import plotly.express as px
 
 
-def main():
-    # Include custom CSS
-    st.markdown("""
-        <style>
-            body {
-                background: black
-            }
-        </style>
-    """, unsafe_allow_html=True)
+
 
     class JobPredictor:
         def __init__(self) -> None:
@@ -140,6 +132,3 @@ def main():
                          title=f'Resume Job Position distribution')
             st.plotly_chart(fig, use_container_width=True)
 
-
-if __name__ == "__main__":
-    main()
