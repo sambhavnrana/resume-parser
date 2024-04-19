@@ -1,3 +1,121 @@
+from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.feature_extraction.text import CountVectorizer
+import streamlit as st
+import pickle
+from nltk.tokenize import WhitespaceTokenizer  
+import plotly.graph_objects as go
+import pandas as pd
+import numpy as np
+import plotly.express as px
+
+class JobPredictor:
+    def __init__(self) -> None:
+        save_label_encoder = open("le.pickle","rb")
+        self.le = pickle.load(save_label_encoder)
+        save_label_encoder.close()
+
+        save_word_vectorizer = open("word_vectorizer.pickle","rb")
+        self.word_vectorizer = pickle.load(save_word_vectorizer)
+        save_word_vectorizer.close()
+
+        save_classifier = open("clf.pickle","rb")
+        self.clf = pickle.load(save_classifier)
+        save_classifier.close()
+
+    def predict(self, resume):
+        feature = self.word_vectorizer.transform([resume])
+        predicted = self.clf.predict(feature)
+        resume_position = self.le.inverse_transform(predicted)[0]
+        return resume_position
+
+    def predict_proba(self, resume):
+        feature = self.word_vectorizer.transform([resume])
+        predicted_prob = self.clf.predict_proba(feature)
+        return predicted_prob[0]
+
+def read_text_from_pdf(pdf_file):
+    text = ""
+    with fitz.open(pdf_file) as doc:
+        for page_num in range(len(doc)):
+            text += doc[page_num].get_text()
+    return text
+
+text_tokenizer = WhitespaceTokenizer()
+remove_characters = str.maketrans("", "", "±§!@#$%^&*()-_=+[]}{;'\:,./<>?|")
+
+st.title("Resume Screener")
+
+jd_pdf = st.file_uploader("Upload your Job Description (PDF)", type=["pdf"])
+
+if st.button("Submit JD"):
+    if jd_pdf is not None:
+        job_description = read_text_from_pdf(jd_pdf)
+        resume_position = JobPredictor().predict(job_description)
+        st.write(f'JD uploaded! Position: {resume_position}')
+    else:
+        st.warning("Please upload a PDF file for Job Description.")
+
+st.title("Upload resume here:")
+uploaded_files = st.file_uploader("Choose multiple files", type=["pdf"], accept_multiple_files=True)
+
+if st.button("Submit Resumes"):
+    if uploaded_files is not None:
+        job_predictor = JobPredictor()
+        job_positions = {x: 0 for x in job_predictor.le.classes_}
+        match_percentage = {}
+        cv = CountVectorizer()
+        for uploaded_file in uploaded_files:
+            resume_text = read_text_from_pdf(uploaded_file)
+            resume_position = job_predictor.predict(resume_text)
+            job_positions[resume_position] += 1
+
+            job_description = read_text_from_pdf(jd_pdf)
+            text_doc = [resume_text, job_description]
+            words_doc_list = text_tokenizer.tokenize(resume_text)
+            words_doc_list = [s.translate(remove_characters) for s in words_doc_list]
+            count_doc = cv.fit_transform(text_doc)
+            similarity_score_doc = cosine_similarity(count_doc)
+            match_percentage_doc = round((similarity_score_doc[0][1]*100), 2)
+            match_percentage[uploaded_file.name] = match_percentage_doc
+
+        match_chart_data = pd.DataFrame({
+            "document": match_percentage.keys(),
+            "percentage": match_percentage.values()
+        })
+
+        fig = px.bar(match_chart_data, x="document", y="percentage", title='Document Matched Percentage')
+        st.plotly_chart(fig, use_container_width=True)
+
+        resume_position = job_predictor.predict(job_description)
+        total_matched = job_positions[resume_position]
+        total_files = len(uploaded_files)
+        
+        st.write(f'Position of the Job description: {resume_position}')
+
+        fig = go.Figure(go.Indicator(
+            mode = "delta+number",
+            delta = {'reference': len(uploaded_files)},
+            value = total_matched,
+            domain = {'row': 0, 'column': 0},
+            title = {'text': f"{total_matched} out of {len(uploaded_files)} Resume falls on same category of JD."}))
+
+        st.plotly_chart(fig, use_container_width=True)
+        
+        df = pd.DataFrame({
+            'names': ['Matched', 'Unmatched'], 
+            'values': [total_matched, total_files]
+        })
+        fig = px.pie(df, values='values', names='names')
+        st.plotly_chart(fig, use_container_width=True)
+
+        chart_data = pd.DataFrame({
+            "position": job_positions.keys(),
+            "match": job_positions.values()
+        })
+
+        fig = px.bar(chart_data, x="position", y="match", title=f'Resume Job Position distribution')
+        st.plotly_chart(fig, use_container_width=True)
+=======
 h1,
 h2 {
   text-align: center;
@@ -107,3 +225,4 @@ form {
   padding: 10px;
   margin-top: 120%;
 }
+

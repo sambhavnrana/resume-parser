@@ -45,7 +45,7 @@ remove_characters = str.maketrans(
 # job_description= docx2txt.process("temp_jd.docx")
 cv = CountVectorizer()
 
-st.title("Job Description:")
+st.title("Upload Job Description")
 
 jd_docx = st.file_uploader("Upload Job Description", type=["docx"])
 # converts pdf format to text
@@ -60,6 +60,7 @@ if st.button("Submit", key='1'):
         st.write(f'Job Description uploaded! Position: {resume_position}')
 else:
     pass
+
 
 st.title("Upload Resume:")
 uploaded_files = st.file_uploader("Choose Resume(s)", type=[
